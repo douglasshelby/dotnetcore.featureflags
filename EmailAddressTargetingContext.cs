@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace dotnetcore.featureflags
 {
+    //use this interface when the user context needs to be created manually at execution time
+    //such as in console apps with no user context
     public class EmailAddressTargetingContext : ITargetingContext
     {
         private string _emailAddress;

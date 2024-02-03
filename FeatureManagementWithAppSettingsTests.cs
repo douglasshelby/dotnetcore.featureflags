@@ -17,12 +17,12 @@ public static class FeatureFlags
     public const string TargetedUserAndGroupFeature = "TargetedUserAndGroupFeature";
     public const string Undefined = "Undefined";
 }
-public class FeatureManagementWithAppSettings
+public class FeatureManagementWithAppSettingsTests
 {
     readonly HostApplicationBuilder _hostApplicationBuilder = new HostApplicationBuilder();
     readonly IHost _host;
     readonly IFeatureManager _featureManager;
-    public FeatureManagementWithAppSettings()
+    public FeatureManagementWithAppSettingsTests()
     {
         var configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.AddJsonFile("appsettings.json");
@@ -32,6 +32,10 @@ public class FeatureManagementWithAppSettings
             .AddFeatureManagement(configuration.GetSection("FeatureManagement"))
             .AddFeatureFilter<PercentageFilter>()
             .AddFeatureFilter<ContextualTargetingFilter>();
+            ///using ContextualTargetingFilter instead of .WithTargeting<> since we're creating a
+            ///context manually duringn execution and not using DI
+
+
 
         _host = _hostApplicationBuilder.Build();
         _featureManager = _host.Services.GetService<IFeatureManager>()!;
